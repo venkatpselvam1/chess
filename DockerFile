@@ -1,0 +1,3 @@
+FROM microsoft/aspnet
+
+COPY webconsole2 C:/inetpub/wwwroot
