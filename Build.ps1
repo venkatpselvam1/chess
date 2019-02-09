@@ -1,2 +1,2 @@
-nuget restore chess.sln
+.\Nuget.exe restore chess.sln
 msbuild chess.sln
