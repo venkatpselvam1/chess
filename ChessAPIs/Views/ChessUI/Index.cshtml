@@ -43,7 +43,7 @@
             var p = $(".current").hasClass("white") ? 0 : 1;
             $.ajax(
                 {
-                    url: "/api/chess/PlayGame?x=" + x + "&y=" + y + "&x1=" + x1 + "&y1=" + y1 + "&p=" + p,
+                    url: "chess/api/chess/PlayGame?x=" + x + "&y=" + y + "&x1=" + x1 + "&y1=" + y1 + "&p=" + p,
                     type: "POST"
                 }).done(function (message) {
                     $("#refresh").trigger("click");
@@ -60,7 +60,7 @@
                 var y = $(this).closest("div.chess-row").prop("id");
                 $(this).addClass("current");
                 $.ajax({
-                    url: "/api/chess/Hints?x=" + x + "&y=" + y
+                    url: "chess/api/chess/Hints?x=" + x + "&y=" + y
                 }).done(function (message) {
                     var hints = jQuery.parseJSON(message);
                     $.each(hints, function (index, value) {
@@ -78,7 +78,7 @@
         RemoveHint();
         $("#board").css("pointer-events", "");
         $.ajax({
-            url: "/api/chess/reset",
+            url: "chess/api/chess/reset",
             type: "POST"
         }).done(function () {
             Refresh();
@@ -88,7 +88,7 @@
         RemoveHint();
         $("div.chess-row div.chess-column img").remove();
         $.ajax({
-            url: "/api/chess"
+            url: "chess/api/chess"
         }).done(function (message) {
             Render(message);
         });
