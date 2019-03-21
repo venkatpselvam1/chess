@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Chess</h2>
+<button id="reset">Reset</button>
+<button id="refresh">Refresh</button>
+<div id="board">
+    @for (int i = 1; i <= 8; i++)
+    {
+        <div id="@i" class="chess-row">
+
+            @for (int j = 1; j <= 8; j++)
+            {<div id="@j" class="chess-column @((i+j) % 2 == 0 ? "black" : "white")">
+                </div>
+
+            }
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#reset").click(Reset);
+        $("#refresh").click(Refresh);
+        $("div.chess-column").click(ShowHint);
+        $("#refresh").trigger("click");
+    });
+    function Render(chessPieces) {
+        var pieces = jQuery.parseJSON(chessPieces);
+        $.each(pieces, function (index, value) {
+            $("div#" + value.CurrentPosition.Y + ".chess-row div#" + value.CurrentPosition.X + ".chess-column").append("<img src='content/images/" + value.Colour + value.Name + ".png'>");
+        });
+    }
+    function ShowHint() {
+        if ($(this).hasClass("hint")) {
+            var x1 = $(this).prop("id");
+            var y1 = $(this).closest("div.chess-row").prop("id");
+            var x = $(".current").prop("id");
+            var y = $(".current").closest("div.chess-row").prop("id");
+            var p = $(".current").hasClass("white") ? 0 : 1;
+            $.ajax(
+                {
+                    url: "/chess/PlayGame?x=" + x + "&y=" + y + "&x1=" + x1 + "&y1=" + y1 + "&p=" + p,
+                    type: "POST"
+                }).done(function (message) {
+                    $("#refresh").trigger("click");
+                    if (message == true) {
+                        alert("game over");
+                        $("#board").css("pointer-events", "none");
+                    }
+                });
+        }
+        else {
+            RemoveHint();
+            if ($(this).find("img").length > 0) {
+                var x = $(this).prop("id");
+                var y = $(this).closest("div.chess-row").prop("id");
+                $(this).addClass("current");
+                $.ajax({
+                    url: "chess/Hints?x=" + x + "&y=" + y
+                }).done(function (message) {
+                    var hints = jQuery.parseJSON(message);
+                    $.each(hints, function (index, value) {
+                        $("div#" + value.Y + ".chess-row div#" + value.X + ".chess-column").addClass("hint");
+                    });
+                });
+            }
+        }
+    }
+    function RemoveHint() {
+        $(".current").removeClass("current");
+        $(".hint").removeClass("hint");
+    }
+    function Reset() {
+        RemoveHint();
+        $("#board").css("pointer-events", "");
+        $.ajax({
+            url: "chess/reset",
+            type: "POST"
+        }).done(function () {
+            Refresh();
+        });
+    }
+    function Refresh() {
+        RemoveHint();
+        $("div.chess-row div.chess-column img").remove();
+        $.ajax({
+            url: "chess/get"
+        }).done(function (message) {
+            Render(message);
+        });
+    }
+</script>
