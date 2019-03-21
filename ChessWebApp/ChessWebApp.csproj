@@ -29,4 +29,12 @@
     <ProjectReference Include="..\ChessGameBusiness\ChessGameBusiness.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Content\Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\chess.css" />
+  </ItemGroup>
+
 </Project>

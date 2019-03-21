@@ -1,0 +1,48 @@
+﻿
+
+#board div.chess-row div.chess-column.black {
+    background: grey;
+    width: 70px;
+    height: 70px;
+}
+
+#board div.chess-row div.chess-column.white {
+    background: white;
+    width: 70px;
+    height: 70px;
+}
+
+#board div.chess-row div.chess-column.current {
+    border-style: solid;
+    border-color: red;
+    border-width: 3px;
+}
+
+#board div.chess-row div.chess-column.hint {
+    border-style: solid;
+    border-color: #163aee;
+    border-width: 3px;
+}
+
+.chess-column {
+    margin: 0;
+    display: inline-block;
+    font-size: 0;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+div#board {
+    margin-left: 100px;
+}
+
+.chess-row {
+    line-height: 0;
+    font-size: 0;
+}
+
+div.chess-row div.chess-column img {
+    height: 40px;
+    width: 40px;
+}

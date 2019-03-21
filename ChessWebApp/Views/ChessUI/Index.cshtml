@@ -31,7 +31,7 @@
     function Render(chessPieces) {
         var pieces = jQuery.parseJSON(chessPieces);
         $.each(pieces, function (index, value) {
-            $("div#" + value.CurrentPosition.Y + ".chess-row div#" + value.CurrentPosition.X + ".chess-column").append("<img src='content/images/" + value.Colour + value.Name + ".png'>");
+            $("div#" + value.CurrentPosition.Y + ".chess-row div#" + value.CurrentPosition.X + ".chess-column").append("<img src='images/" + value.Colour + value.Name + ".png'>");
         });
     }
     function ShowHint() {
